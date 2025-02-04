@@ -1,0 +1,32 @@
+<div class="file-upload-container">
+    <h2>Folder Upload</h2>
+    <button (click)="selectFolder()" class="select-button">Select Folder</button>
+    <button (click)="uploadFiles()" class="upload-button" [disabled]="!fileTree">Process Folder Structure</button>
+    <button (click)="clearSelection()" class="clear-button" *ngIf="fileTree !== null">Clear Selection</button>
+  
+    <p class="message" [class.error]="message.includes('Error')">{{ message }}</p>
+    <p *ngIf="isLoading" class="loading">Processing folder...</p>
+    
+    <div *ngIf="fileTree" class="file-tree">
+      <h3>Folder Structure:</h3>
+      <p>Total items: {{ getTotalItems(fileTree) }}</p>
+      <ul>
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ node: fileTree }"></ng-container>
+      </ul>
+    </div>
+  </div>
+  
+  <ng-template #recursiveListTmpl let-node="node">
+    <li>
+      <span [class.folder]="node.type === 'directory'" [class.file]="node.type === 'file'">
+        {{ node.name }}
+        <span *ngIf="node.type === 'file'">({{ node.size | number }} bytes)</span>
+      </span>
+      <ul *ngIf="node.children && node.children.length > 0">
+        <ng-container *ngFor="let child of node.children">
+          <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ node: child }"></ng-container>
+        </ng-container>
+      </ul>
+    </li>
+  </ng-template>
+  
