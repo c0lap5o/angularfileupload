@@ -14,10 +14,15 @@ This project contains an Angular component for uploading files and directories u
 2. Run `npm install`
 3. Start the development server with `ng serve`
 
+To send the request you need to implement the method uploadFiles() and change the url to your desired destination
+
 ## Usage
 
-[Add usage instructions here]
-
+1. Click upload files
+2. Select the files you want
+3. Click upload
+   
+That simple
 ## Dependencies
 
 - Angular
